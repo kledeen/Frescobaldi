@@ -45,27 +45,23 @@ baseKey = c      % Used for all score renderings
 \scoreSection "" \baseKey \RH \LH \chords {a }
 %}
 
-soprano = {
-    \relative c'  { 
-      c2
-}		% end of soprano
+pianoRH = { \relative c' {
+  a b c d
+} } % end of piano RH
+pianoLH = { \relative c' {
+  a b c d
+} } % end of piano LH
 
-alto = {
-    \relative c'  { 
-      c2
-  } 
-}		% end of alto
+leadSheet = { \relative c' {
+  a4 b c d
+}} % end of leadsheet
+rbChords = { \chordmode {
+  c1
+}} % end of Real Book Chords
 
-tenor = {
-    \relative c'  { 
-      c2
-  } 
-}		% end of tenor
-bass = {
-    \relative c'  { 
-      c2
-  } 
-}		% end of bass
+leadLyrics = { \lyricmode {
+  These are the words
+}} % end of lyrics
 
 %    =======================================
 %              Modify or Delete all that follows ... it's just a template!
@@ -77,23 +73,41 @@ bass = {
 \paper { #(set-paper-size "letter") }
 \book {
    \bookOutputName "lilypond template"
+   \markup {
+     \column { 
+               \line \fontsize #4 {"Discography "}
+               %\line {\with-url "url here" "text here"}
+               \line { put some youtube links here }
+     \hspace #4 
+     }   % end of column
+   }        %end of markup
+ %   \score {
+%   \new StaffGroup <<    
+%     \chords {  \rbChords    }
+%     
+%       \new Staff  \with {instrumentName = #"Piano " }   {
+%      
+%         \key \baseKey \major		
+%         \leadSheet
+%         \addlyrics \leadLyrics
+%       }  % end of treble staff
+%   >>   % end of Staff Group for Keyboard & Baass
+% }    % end of score
+  \markup \fontsize #6  \fill-line { "Rendition"}
 \score {
+  
   \new StaffGroup <<
-
-    \new PianoStaff <<
-    
-    \chords {      }
-    
-      \new Staff  \with {instrumentName = #"Piano " }   {
-        \tempo 4=120
-        \key c \major		
-        << {\soprano } \\ {\alto} >>
+    \new PianoStaff <<   
+    \chords {      }   
+      \new Staff  \with {instrumentName = #"Piano " }   {     
+        \key \baseKey \major		
+       \pianoRH
       }  % end of treble staff
 
       \new Staff   {
-        \key c \major
+        \key \baseKey \major
         \clef "bass"
-        << {\tenor } \\ {\bass} >>
+        \pianoLH
       } % end of bass staff
 
     >>
@@ -113,5 +127,20 @@ bass = {
   >>   % end of Staff Group for Keyboard & Baass
   \layout {}
  %	\midi {}
+}    % end of score
+
+\pageBreak
+  \markup \fontsize #6  \fill-line { "Lead Sheet"}
+  \score {
+  \new StaffGroup <<    
+    \chords {  \rbChords    }
+    
+      \new Staff  \with {instrumentName = #"Piano " }   {
+     
+        \key \baseKey \major		
+        \leadSheet
+        \addlyrics \leadLyrics
+      }  % end of treble staff
+  >>   % end of Staff Group for Keyboard & Baass
 }    % end of score
 }    % end of Book
